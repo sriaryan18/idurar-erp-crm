@@ -1,7 +1,7 @@
-const core = require('../coreFeature');
+const coreService = require('../serviceLayer/coreService');
 
-const createSchedularController =   {
-    schedule : (Model,req,res) => core(Model,req,res)
-}
+const createSchedularController = {
+  save: (Model, req, res) => coreService(Model, req, res),
+};
 
-module.exports = createSchedularController
+module.exports = createSchedularController;

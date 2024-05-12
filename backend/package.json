@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js --ignore public/ |  nodemon services/notifications/schedular/index.js",
+    "dev": "nodemon src/server.js --ignore public/ &   ./services/notifications/dev.sh",
     "production": "NODE_ENV=production",
     "setup": "node src/setup/setup.js",
     "upgrade": "node src/setup/upgrade.js",

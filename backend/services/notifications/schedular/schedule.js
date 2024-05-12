@@ -1,22 +1,33 @@
 var cron = require('node-cron');
 const serviceConfigs = require('./config');
 const mongoose = require('mongoose');
+const sendToAggregatorService = require('./libs/aggregator')
 const { scheduleCron } = serviceConfigs;
-
+// TODO: refactor this file (infact the whole codebase of this service)
 const fetchNotificationToDispatch = async () => {
   const today = new Date();
-//   today.setHours(0, 0, 0, 0);
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
   const Model = mongoose.model('Notification');
-  console.log('today',today,tomorrow)
-  const notificationToBesent = await Model.find({
-    schedule: {
-      $gte: today,
-      $lte: tomorrow,
+  console.log('today', today, tomorrow);
+  const notificationGroupedById = await Model.aggregate([
+    {
+      $match: {
+        schedule: {
+          $gte: today,
+          $lte: tomorrow,
+        },
+      },
     },
-  }).exec();
-  console.log('notid',notificationToBesent)
+    {
+      $group: {
+        _id: '$userInfo.userId',
+        notificationGoups: { $push: '$$ROOT' },
+      },
+    },
+  ]);
+  sendToAggregatorService(notificationGroupedById);
+  console.log('notid', notificationGroupedById);
 };
 
 cron.schedule(
