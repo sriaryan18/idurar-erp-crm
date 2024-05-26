@@ -9,7 +9,7 @@ const fetchNotificationToDispatch = async () => {
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
   const Model = mongoose.model('Notification');
-  console.log('today', today, tomorrow);
+  // console.log('today', today, tomorrow);
   const notificationGroupedById = await Model.aggregate([
     {
       $match: {
