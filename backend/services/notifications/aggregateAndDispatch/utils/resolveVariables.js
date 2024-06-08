@@ -1,7 +1,7 @@
 const resolveVariables = (template, data) => {
   const { variables } = template;
   const context = variables.reduce((acc, item) => {
-    acc[item] = 'dummyData'; // TODO: this has to be fetched from DB
+    acc[item] = data?.variables[item] ?? '';
     return acc;
   }, {});
   return context;

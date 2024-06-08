@@ -1,14 +1,11 @@
-const resolveVariables = require('./resolveVariables');
-const resolveTemplateToNotif = require('./resolveTemplatesToNotif');
+const resolveVariables = require('../utils/resolveVariables');
+const resolveTemplateToNotif = require('../utils/resolveTemplatesToNotif');
 const aggregateReminderNotification = (reminderNotification) => {
-  console.log(reminderNotification);
-
-  reminderNotification.map((item) => {
+  return reminderNotification.map((item) => {
     const { template, data } = item;
     const context = resolveVariables(template, data);
     const finalMsg = resolveTemplateToNotif(template.message, context);
-
-    console.log('I am resolved str', finalMsg);
+    return finalMsg;
   });
 };
 module.exports = aggregateReminderNotification;

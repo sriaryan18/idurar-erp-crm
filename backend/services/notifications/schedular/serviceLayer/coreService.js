@@ -15,7 +15,6 @@ const saveNotificationToDB = async (
 
 const saveNotificationItem = async (Model, req, res) => {
   if (!Model) throw new Error('No Model found');
-
   const { notificationTemplateId, variables, schedule, userInfo, metaData } = req.body;
 
   const verification = performVerification({ notificationTemplateId, variables, schedule });
